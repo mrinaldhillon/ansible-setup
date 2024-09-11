@@ -1,0 +1,118 @@
+[org/gnome/Ptyxis]
+audible-bell=false
+default-profile-uuid='fd74cdfd72c8fa8b7784c82066d9584a'
+enable-a11y=true
+font-name='Monospace 14'
+profile-uuids=['fd74cdfd72c8fa8b7784c82066d9584a']
+use-system-font=false
+visual-bell=false
+window-size=(uint32 208, uint32 94)
+
+[org/gnome/desktop/applications/terminal]
+exec='ptyxis'
+
+[org/gnome/desktop/datetime]
+automatic-timezone=true
+
+[org/gnome/desktop/input-sources]
+current=uint32 0
+sources=[('xkb', 'us')]
+xkb-options=['caps:none']
+
+[org/gnome/desktop/interface]
+clock-show-weekday=true
+color-scheme='prefer-dark'
+enable-hot-corners=false
+show-battery-percentage=true
+text-scaling-factor=1.25
+toolkit-accessibility=false
+
+[org/gnome/desktop/peripherals/mouse]
+natural-scroll=false
+
+[org/gnome/desktop/peripherals/touchpad]
+disable-while-typing=true
+natural-scroll=false
+tap-to-click=true
+two-finger-scrolling-enabled=true
+
+[org/gnome/desktop/privacy]
+report-technical-problems=false
+
+[org/gnome/desktop/sound]
+event-sounds=false
+theme-name='__custom'
+
+[org/gnome/desktop/wm/preferences]
+focus-mode='sloppy'
+workspace-names=['Work', 'Surf', 'Workspace 3', 'Workspace 4']
+
+[org/gnome/mutter]
+attach-modal-dialogs=false
+edge-tiling=false
+experimental-features=['scale-monitor-framebuffer', 'kms-modifiers', 'autoclose-xwayland', 'variable-refresh-rate']
+workspaces-only-on-primary=false
+
+[org/gnome/shell]
+app-picker-layout=[{'1password.desktop': <{'position': <0>}>, 'org.gnome.Contacts.desktop': <{'position': <1>}>, 'org.gnome.Weather.desktop': <{'position': <2>}>, 'org.gnome.clocks.desktop': <{'position': <3>}>, 'org.gnome.Maps.desktop': <{'position': <4>}>, 'org.gnome.gitlab.somas.Apostrophe.desktop': <{'position': <5>}>, 'org.gnome.Snapshot.desktop': <{'position': <6>}>, 'org.gnome.Totem.desktop': <{'position': <7>}>, 'org.gnome.Calculator.desktop': <{'position': <8>}>, 'org.chromium.Chromium.desktop': <{'position': <9>}>, 'simple-scan.desktop': <{'position': <10>}>, 'org.gnome.Settings.desktop': <{'position': <11>}>, 'org.gnome.SystemMonitor.desktop': <{'position': <12>}>, 'org.gnome.Boxes.desktop': <{'position': <13>}>, 'org.gnome.Terminal.desktop': <{'position': <14>}>, 'Utilities': <{'position': <15>}>, 'com.mattjakeman.ExtensionManager.desktop': <{'position': <16>}>, 'yelp.desktop': <{'position': <17>}>, 'org.gnome.Extensions.desktop': <{'position': <18>}>, 'org.fedoraproject.MediaWriter.desktop': <{'position': <19>}>, 'com.github.tchx84.Flatseal.desktop': <{'position': <20>}>, 'libreoffice-calc.desktop': <{'position': <21>}>, 'libreoffice-impress.desktop': <{'position': <22>}>, 'libreoffice-writer.desktop': <{'position': <23>}>}, {'nvim.desktop': <{'position': <0>}>, 'md.obsidian.Obsidian.desktop': <{'position': <1>}>, 'org.gnome.Rhythmbox3.desktop': <{'position': <2>}>, 'org.gnome.Ptyxis.desktop': <{'position': <3>}>, 'org.gnome.Tour.desktop': <{'position': <4>}>, 'org.wezfurlong.wezterm.desktop': <{'position': <5>}>, 'virt-manager.desktop': <{'position': <6>}>, 'remote-viewer.desktop': <{'position': <7>}>, 'io.podman_desktop.PodmanDesktop.desktop': <{'position': <8>}>}]
+disable-extension-version-validation=true
+disabled-extensions=@as []
+enabled-extensions=['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'extension-list@tu.berry', 'appindicatorsupport@rgcjonas.gmail.com', 'text-scaler@gnome-shell-extensions.mariospr.org', 'moveclock@kuvaus.org', 'caffeine@patapon.info', 'gsconnect@andyholmes.github.io', 'custom-command-toggle@storageb.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'paperwm@paperwm.github.com']
+last-selected-power-profile='performance'
+welcome-dialog-last-shown-version='46.4'
+
+[org/gnome/shell/extensions/caffeine]
+indicator-position-max=5
+
+[org/gnome/shell/extensions/custom-command-toggle]
+entryrow1-setting='~/myscripts/toggle-tap-to-click.sh true'
+entryrow12-setting='~/myscripts/toggle-touchpad.sh enabled'
+entryrow2-setting='~/myscripts/toggle-tap-to-click.sh false'
+entryrow22-setting='~/myscripts/toggle-touchpad.sh disabled'
+entryrow3-setting='TapToClick'
+entryrow32-setting='Touchpad'
+entryrow4-setting=''
+entryrow42-setting=''
+initialtogglestate1-setting=0
+initialtogglestate2-setting=0
+numbuttons-setting=2
+togglestate1-setting=true
+togglestate2-setting=true
+
+[org/gnome/shell/extensions/paperwm]
+last-used-display-server='Wayland'
+restore-attach-modal-dialogs='true'
+restore-edge-tiling='true'
+restore-keybinds='{"toggle-tiled-left":{"bind":"[\\"<Super>Left\\"]","schema_id":"org.gnome.mutter.keybindings"},"toggle-tiled-right":{"bind":"[\\"<Super>Right\\"]","schema_id":"org.gnome.mutter.keybindings"},"cancel-input-capture":{"bind":"[\\"<Super><Shift>Escape\\"]","schema_id":"org.gnome.mutter.keybindings"},"restore-shortcuts":{"bind":"[\\"<Super>Escape\\"]","schema_id":"org.gnome.mutter.wayland.keybindings"},"switch-to-workspace-last":{"bind":"[\\"<Super>End\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-panels":{"bind":"[\\"<Control><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-group-backward":{"bind":"[\\"<Shift><Super>Above_Tab\\",\\"<Shift><Alt>Above_Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"unmaximize":{"bind":"[\\"<Super>Down\\",\\"<Alt>F5\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-1":{"bind":"[\\"<Super>Home\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-left":{"bind":"[\\"<Super><Shift>Left\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-down":{"bind":"[\\"<Super><Shift>Down\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-left":{"bind":"[\\"<Super>Page_Up\\",\\"<Super><Alt>Left\\",\\"<Control><Alt>Left\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-group":{"bind":"[\\"<Super>Above_Tab\\",\\"<Alt>Above_Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-left":{"bind":"[\\"<Super><Shift>Page_Up\\",\\"<Super><Shift><Alt>Left\\",\\"<Control><Shift><Alt>Left\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-right":{"bind":"[\\"<Super><Shift>Page_Down\\",\\"<Super><Shift><Alt>Right\\",\\"<Control><Shift><Alt>Right\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-panels-backward":{"bind":"[\\"<Shift><Control><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-up":{"bind":"[\\"<Control><Shift><Alt>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-right":{"bind":"[\\"<Super>Page_Down\\",\\"<Super><Alt>Right\\",\\"<Control><Alt>Right\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-down":{"bind":"[\\"<Control><Shift><Alt>Down\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-applications":{"bind":"[\\"<Super>Tab\\",\\"<Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"maximize":{"bind":"[\\"<Super>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-right":{"bind":"[\\"<Super><Shift>Right\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-applications-backward":{"bind":"[\\"<Shift><Super>Tab\\",\\"<Shift><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-up":{"bind":"[\\"<Super><Shift>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"shift-overview-up":{"bind":"[\\"<Super><Alt>Up\\"]","schema_id":"org.gnome.shell.keybindings"},"shift-overview-down":{"bind":"[\\"<Super><Alt>Down\\"]","schema_id":"org.gnome.shell.keybindings"},"focus-active-notification":{"bind":"[\\"<Super>n\\"]","schema_id":"org.gnome.shell.keybindings"},"toggle-message-tray":{"bind":"[\\"<Super>v\\",\\"<Super>m\\"]","schema_id":"org.gnome.shell.keybindings"},"rotate-video-lock-static":{"bind":"[\\"<Super>o\\",\\"XF86RotationLockToggle\\"]","schema_id":"org.gnome.settings-daemon.plugins.media-keys"}}'
+restore-workspaces-only-on-primary='true'
+show-window-position-bar=false
+winprops=['{"wm_class":"/.*1Password.*/","scratch_layer":true,"title":""}']
+
+[org/gnome/shell/extensions/paperwm/workspaces]
+list=['d453818f-667d-4b83-9189-cd0e2529f018', '46f25b88-a055-41ac-8a98-412c08d64137', '70112967-b570-4a3a-a61f-7fa90a559e6d', '5f41556d-1627-40e5-87af-92e50ccfdcc2', '39dbad24-7c24-4fd2-beb7-bdc2979a9c97']
+
+[org/gnome/shell/extensions/paperwm/workspaces/39dbad24-7c24-4fd2-beb7-bdc2979a9c97]
+index=4
+
+[org/gnome/shell/extensions/paperwm/workspaces/46f25b88-a055-41ac-8a98-412c08d64137]
+index=1
+name='Surf'
+
+[org/gnome/shell/extensions/paperwm/workspaces/5f41556d-1627-40e5-87af-92e50ccfdcc2]
+index=3
+
+[org/gnome/shell/extensions/paperwm/workspaces/70112967-b570-4a3a-a61f-7fa90a559e6d]
+index=2
+
+[org/gnome/shell/extensions/paperwm/workspaces/d453818f-667d-4b83-9189-cd0e2529f018]
+index=0
+name='Work'
+
+[org/gnome/shell/extensions/user-theme]
+name='custom'
+
+[org/gnome/system/location]
+enabled=true
+
+[org/gnome/tweaks]
+show-extensions-notice=false

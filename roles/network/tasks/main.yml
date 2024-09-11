@@ -1,0 +1,13 @@
+# roles/network/tasks/main.yml
+- name: Deploy Wi-Fi configuration
+  template:
+    src: files/Yara.nmconnection
+    dest: /etc/NetworkManager/system-connections/Yara.nmconnection
+    mode: '0600'
+#  notify: Restart NetworkManager
+
+# Handler to restart NetworkManager
+#- name: Restart NetworkManager
+#  service:
+#    name: NetworkManager
+#    state: restarted

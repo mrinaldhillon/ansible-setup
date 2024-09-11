@@ -1,0 +1,65 @@
+# roles/packages/tasks/main.yml
+- name: Install required packages
+  dnf:
+    name: "{{ packages }}"
+    state: present
+
+- name: Setup flatpak
+  command: flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  become: true
+  become_user: "{{ ansible_user }}"
+
+- name: Install Flatpak applications
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    remote: flathub
+    method: user
+  loop: "{{ flatpaks }}"
+  become: true
+  become_user: "{{ ansible_user }}"
+  ignore_errors: true
+
+- name: Set default to graphical.target
+  systemd:
+    name: graphical.target
+    enabled: yes
+
+- name: Create nvim-clean wrapper script
+  copy:
+    dest: /usr/local/bin/nvim-clean
+    content: |
+      #!/bin/sh
+      exec nvim --clean "$@"
+    mode: "0755"
+
+- name: Set nvim-clean as alternative for vim
+  command: update-alternatives --install /usr/bin/vim vim /usr/local/bin/nvim-clean 50
+  args:
+    creates: /etc/alternatives/vim
+
+- name: Set nvim-clean as the default alternative for vim
+  command: update-alternatives --set vim /usr/local/bin/nvim-clean
+
+- name: Ensure nested directories exist
+  file:
+    path: /opt/1Password
+    state: directory
+    mode: "0755"
+
+- name: Download and install 1Password
+  block:
+    - name: Download 1Password
+      get_url:
+        url: https://downloads.1password.com/linux/tar/stable/aarch64/1password-latest.tar.gz
+        dest: /tmp/1password-latest.tar.gz
+
+- name: Extract 1Password
+  unarchive:
+    src: /tmp/1password-latest.tar.gz
+    dest: /opt/1Password
+    extra_opts: ["--strip-components=1", "--show-stored-names"]
+    remote_src: yes
+
+- name: Run 1Password post-install script
+  command: /opt/1Password/after-install.sh

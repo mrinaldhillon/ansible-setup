@@ -1,0 +1,76 @@
+# vars/main.yml
+ansible_user: mrinal
+dotfiles_repo: "https://github.com/mrinaldhillon/dotfiles.git" # Replace with your actual dotfiles repo URL
+dotfiles_dir: "$HOME/dotfiles"
+kernel_args: "apple_dcp.show_notch=1 slub_debug=-"
+gnome_extensions:
+  - uuid: "extension-list@tu.berry"
+  - uuid: "appindicatorsupport@rgcjonas.gmail.com"
+  - uuid: "text-scaler@gnome-shell-extensions.mariospr.org"
+  - uuid: "custom-command-toggle@storageb.github.com"
+  - uuid: "moveclock@kuvaus.org"
+  - uuid: "caffeine@patapon.info"
+  - uuid: "gsconnect@andyholmes.github.io"
+  - uuid: "user-theme@gnome-shell-extensions.gcampax.github.com"
+  - uuid: "paperwm@paperwm.github.com"
+  - uuid: "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
+packages:
+  - "@workstation-product-environment"
+  - gnome-tweaks
+  - neovim
+  - python3-pip
+  - python3-neovim
+  - fd-find
+  - fswatch
+  - ripgrep
+  - unzip
+  - tmux
+  - tmux-powerline
+  - tmux-top
+  - wl-clipboard
+  - cmake
+  - golang
+  - chromium-browser
+  - buildah
+  - podman
+  - toolbox
+  - gh
+  - gnome-extensions-app
+  - stow
+  - git
+  - qemu-user-static-x86
+  - ptyxis
+  - flatpak
+flatpaks:
+  - md.obsidian.Obsidian
+  - org.chromium.Chromium
+  - org.wezfurlong.wezterm
+  - org.gnome.gitlab.somas.Apostrophe
+  - com.mattjakeman.ExtensionManager
+bluetooth_devices:
+  - name: "G915 TKL"
+    mac: "EA:F4:22:97:11:EB"
+  - name: "MX Master 3"
+    mac: "EA:F4:05:A4:92:42"
+# vars/main.yml
+fonts:
+  - name: "FiraCode"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz"
+  - name: "JetBrainsMono"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
+  - name: "Hack"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.tar.xz"
+  - name: "CascadiaCode"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.tar.xz"
+  - name: "Meslo"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.tar.xz"
+  - name: "UbuntuMono"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.tar.xz"
+  - name: "SourceCodePro"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.tar.xz"
+  - name: "RobotoMono"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/RobotoMono.tar.xz"
+  - name: "Iosevka"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.tar.xz"
+  - name: "DejaVuSansMono"
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/DejaVuSansMono.tar.xz"
