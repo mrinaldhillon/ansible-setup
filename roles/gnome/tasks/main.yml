@@ -5,6 +5,11 @@
 #  register: extension_install
 #  ignore_errors: true
 
+- name: Install system shell extensions packages
+  dnf:
+    name: "{{ shell_extensions }}"
+    state: present
+
 - name: Apply GNOME settings
   copy:
     src: files/gnome-settings.dconf

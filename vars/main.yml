@@ -15,7 +15,6 @@ gnome_extensions:
   - uuid: "paperwm@paperwm.github.com"
   - uuid: "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
 packages:
-  - "@workstation-product-environment"
   - gnome-tweaks
   - neovim
   - python3-pip
@@ -76,3 +75,16 @@ fonts:
     url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.tar.xz"
   - name: "DejaVuSansMono"
     url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/DejaVuSansMono.tar.xz"
+shell_extensions:
+  - gnome-shell-extension-appindicator
+  - gnome-shell-extension-apps-menu
+  - gnome-shell-extension-background-logo
+  - gnome-shell-extension-caffeine
+  - gnome-shell-extension-common
+  - gnome-shell-extension-forge
+  - gnome-shell-extension-frippery-move-clock
+  - gnome-shell-extension-gsconnect.aarch64
+  - gnome-shell-extension-launch-new-instance
+  - gnome-shell-extension-places-menu
+  - gnome-shell-extension-user-theme
+  - gnome-shell-extension-window-list
