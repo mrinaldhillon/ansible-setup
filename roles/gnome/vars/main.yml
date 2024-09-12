@@ -1,0 +1,39 @@
+---
+gnome_packages:
+  - gnome-tweaks
+  - dconf-editor
+  - gnome-extensions-app
+  - chromium-browser
+  - wl-clipboard
+  - ptyxis
+  - rsms-inter-vf-fonts
+
+shell_extensions:
+  - gnome-shell-extension-appindicator
+  - gnome-shell-extension-caffeine
+  - gnome-shell-extension-common
+  - gnome-shell-extension-frippery-move-clock
+  - gnome-shell-extension-gsconnect.aarch64
+  - gnome-shell-extension-launch-new-instance
+  - gnome-shell-extension-user-theme
+
+  # Add other GNOME packages as needed
+gnome_extensions:
+  - uuid: "extension-list@tu.berry"
+  - uuid: "appindicatorsupport@rgcjonas.gmail.com"
+  - uuid: "text-scaler@gnome-shell-extensions.mariospr.org"
+  - uuid: "custom-command-toggle@storageb.github.com"
+  - uuid: "moveclock@kuvaus.org"
+  - uuid: "caffeine@patapon.info"
+  - uuid: "gsconnect@andyholmes.github.io"
+  - uuid: "user-theme@gnome-shell-extensions.gcampax.github.com"
+  - uuid: "paperwm@paperwm.github.com"
+  - uuid: "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
+#- org.wezfurlong.wezterm
+#
+
+flatpak_remote_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+flatpaks:
+  - org.gnome.gitlab.somas.Apostrophe
+  - com.mattjakeman.ExtensionManager
+  - md.obsidian.Obsidian

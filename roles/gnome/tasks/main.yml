@@ -1,20 +1,47 @@
-# roles/gnome/tasks/main.yml
-- name: Install GNOME Shell Extensions
-  command: gnome-extensions install {{ item.uuid }}
-  loop: "{{ gnome_extensions }}"
-  register: extension_install
-  ignore_errors: true
+---
+# GNOME Package Installation
+- block:
+    - name: Install required GNOME packages
+      dnf:
+        name: "{{ gnome_packages }}"
+        state: present
+      become: true
 
-- name: Apply GNOME settings
-  copy:
-    src: gnome-settings.dconf
-    dest: /tmp/gnome-settings.dconf
+    # GNOME Settings Deployment
+    - name: Copy GNOME settings file
+      copy:
+        src: gsettings.dconf
+        dest: "/tmp/gsettings.dconf"
 
-- name: Load GNOME settings using dconf
-  shell: dbus-launch dconf load / < /tmp/gnome-settings.dconf
-  ignore_errors: true
+    - name: Load GNOME settings using dconf
+      shell: dconf load -f / < /tmp/gsettings.dconf
 
-- name: Enable GNOME Shell Extensions
-  shell: dbus-launch gnome-extensions enable {{ item.uuid }}
-  loop: "{{ gnome_extensions }}"
-  ignore_errors: true
+    - name: Update dconf system-wide
+      command: dconf update
+      become: true
+
+    # GNOME Shell Extensions
+    - name: Install GNOME shell extensions packages
+      dnf:
+        name: "{{ shell_extensions }}"
+        state: present
+      become: true
+  name: GNOME
+
+- block:
+    # Flatpak Setup
+    - name: Setup Flatpak remote
+      flatpak_remote:
+        name: flathub
+        flatpakrepo_url: "{{ flatpak_remote_url }}"
+        state: present
+
+    # Flatpak Applications Installation
+    - name: Install Flatpak applications
+      flatpak:
+        name: "{{ item }}"
+        state: present
+        remote: flathub
+      loop: "{{ flatpaks }}"
+  become: true
+  name: FLATPAKS

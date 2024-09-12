@@ -1,0 +1,48 @@
+---
+- block:
+    - name: Include encrypted variables from vault file
+      include_vars:
+        file: "{{ role_path }}/vars/vault.yml"
+      no_log: true
+
+    # GitHub Authentication
+    - name: GITHUB
+      shell: |
+        echo "{{ vault_github_token }}" | gh auth login --with-token
+      no_log: true
+
+    - name: Ensure ~/.gitconfig is deployed
+      copy:
+        src: gitconfig
+        dest: "{{ ansible_env.HOME }}/.gitconfig"
+        mode: "0644"
+  tags: guthub
+  name: GITHUB
+
+- block:
+    - name: Setup Env
+      file:
+        path: "{{ ansible_env.HOME }}/.config/environment.d"
+        state: directory
+        mode: "0755"
+
+    - copy:
+        src: u_env.conf
+        dest: "{{ ansible_env.HOME }}/.config/environment.d/u_env.conf"
+        mode: "0600"
+  name: USER ENV
+
+- block:
+    # Dotfiles Management
+    - name: Clone dotfiles repository
+      git:
+        repo: "{{ dotfiles_repo }}"
+        dest: "{{ dotfiles_dir }}"
+        update: yes
+
+    - name: Apply dotfiles using stow
+      shell: stow .
+      args:
+        chdir: "{{ dotfiles_dir }}"
+      ignore_errors: true
+  name: DOTFILES

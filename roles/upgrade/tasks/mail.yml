@@ -1,5 +1,0 @@
-- name: Update kernel parameters
-  command: grubby --args="{{ kernel_args }}" --update-kernel=ALL
-
-- name: Perform offline upgrade
-  command: dnf offline-upgrade download --best --refresh --assumeyes && dnf offline reboot -y

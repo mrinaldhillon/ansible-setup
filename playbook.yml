@@ -1,15 +1,11 @@
 - name: Set up Fedora environment
   hosts: localhost
-  become: true
-  vars_files:
-    - vars/vault.yml
-    - vars/main.yml
   roles:
-    - packages
-    - role: github
-      become_user: "{{ ansible_user }}"
-    - role: dotfiles
-      become_user: "{{ ansible_user }}"
-    - role: fonts
-      become_user: "{{ ansible_user }}"
-    - upgrade
+    - role: system_setup
+      tags: system_setup
+
+    - role: user_config
+      tags: user_config
+
+    - role: gnome
+      tags: gnome
