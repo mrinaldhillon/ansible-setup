@@ -16,6 +16,7 @@
   shell: stow .
   args:
     chdir: "{{ dotfiles_dir }}"
+  ignore_errors: true
 
 - name: Chromium flags
   copy:

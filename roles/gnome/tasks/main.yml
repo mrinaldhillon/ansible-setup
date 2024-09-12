@@ -1,20 +1,19 @@
 # roles/gnome/tasks/main.yml
-- name: Install GNOME Shell Extensions
-  command: gnome-extensions install {{ item.uuid }}
-  loop: "{{ gnome_extensions }}"
-  register: extension_install
-  ignore_errors: true
+#- name: Install GNOME Shell Extensions
+#  command: gnome-extensions install {{ item.uuid }}
+#  loop: "{{ gnome_extensions }}"
+#  register: extension_install
+#  ignore_errors: true
 
 - name: Apply GNOME settings
   copy:
-    src: gnome-settings.dconf
+    src: files/gnome-settings.dconf
     dest: /tmp/gnome-settings.dconf
 
 - name: Load GNOME settings using dconf
   shell: dbus-launch dconf load / < /tmp/gnome-settings.dconf
   ignore_errors: true
-
-- name: Enable GNOME Shell Extensions
-  shell: dbus-launch gnome-extensions enable {{ item.uuid }}
-  loop: "{{ gnome_extensions }}"
-  ignore_errors: true
+#- name: Enable GNOME Shell Extensions
+#  shell: dbus-launch gnome-extensions enable {{ item.uuid }}
+#  loop: "{{ gnome_extensions }}"
+#  ignore_errors: true

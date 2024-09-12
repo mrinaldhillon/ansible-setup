@@ -41,6 +41,8 @@ packages:
   - qemu-user-static-x86
   - ptyxis
   - flatpak
+  - fuse
+  - fuse3
 flatpaks:
   - md.obsidian.Obsidian
   - org.chromium.Chromium

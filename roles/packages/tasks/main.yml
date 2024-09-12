@@ -4,6 +4,12 @@
     name: "{{ packages }}"
     state: present
 
+- name: Set default to graphical.target
+  systemd:
+    name: graphical.target
+    enabled: yes
+    state: started
+
 - name: Setup flatpak
   command: flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   become: true
@@ -19,11 +25,6 @@
   become: true
   become_user: "{{ ansible_user }}"
   ignore_errors: true
-
-- name: Set default to graphical.target
-  systemd:
-    name: graphical.target
-    enabled: yes
 
 - name: Create nvim-clean wrapper script
   copy:
@@ -41,7 +42,7 @@
 - name: Set nvim-clean as the default alternative for vim
   command: update-alternatives --set vim /usr/local/bin/nvim-clean
 
-- name: Ensure nested directories exist
+- name: Ensure 1Password Dir exists
   file:
     path: /opt/1Password
     state: directory
