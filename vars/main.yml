@@ -44,7 +44,6 @@ packages:
   - fuse3
 flatpaks:
   - md.obsidian.Obsidian
-  - org.chromium.Chromium
   - org.wezfurlong.wezterm
   - org.gnome.gitlab.somas.Apostrophe
   - com.mattjakeman.ExtensionManager
