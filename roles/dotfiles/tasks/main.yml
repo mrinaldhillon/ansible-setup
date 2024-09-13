@@ -6,6 +6,12 @@
     state: directory
     mode: "0755"
 
+- name: Chromium flags
+  copy:
+    src: files/chromium-flags.conf
+    dest: $HOME/.config/environment.d/chromium.conf
+    mode: "0600"
+
 - name: Clone dotfiles repository
   git:
     repo: "{{ dotfiles_repo }}"
@@ -17,9 +23,3 @@
   args:
     chdir: "{{ dotfiles_dir }}"
   ignore_errors: true
-
-- name: Chromium flags
-  copy:
-    src: files/chromium-flags.conf
-    dest: $HOME/.config/environment.d/chromium.conf
-    mode: "0600"

@@ -2,7 +2,7 @@
 - name: Authenticate with GitHub using a token
   shell: |
     echo "{{ github_token }}" | gh auth login --with-token
-  no_log: false # Hide sensitive output
+  no_log: true # Hide sensitive output
 
   # roles/github/tasks/main.yml
 - name: Ensure ~/.gitconfig is deployed
