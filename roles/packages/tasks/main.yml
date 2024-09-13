@@ -12,6 +12,7 @@
 
 - name: Setup flatpak
   command: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  ignore_errors: true
 
 - name: Install Flatpak applications
   flatpak:
@@ -45,6 +46,7 @@
 
 - name: Download and install 1Password
   command: curl -sSo /tmp/1password-latest.tar.gz https://downloads.1password.com/linux/tar/stable/aarch64/1password-latest.tar.gz
+  ignore_errors: true
 
 - name: Extract 1Password
   unarchive:
@@ -52,6 +54,18 @@
     dest: /opt/1Password
     extra_opts: ["--strip-components=1", "--show-stored-names"]
     remote_src: yes
+  ignore_errors: true
 
 - name: Run 1Password post-install script
-  command: /opt/1Password/after-install.sh
+  command:
+    cmd: /opt/1Password/after-install.sh
+  ignore_errors: true
+
+- name: setup binfmt_misc for x86
+  shell: sed 's/$/C/' /usr/lib/binfmt.d/qemu-x86_64-static.conf > /etc/binfmt.d/qemu-x86_64-static.conf
+  ignore_errors: true
+
+- name: restart binfmt service
+  command:
+    cmd: systemctl restart systemd-binfmt.service
+  ignore_errors: true

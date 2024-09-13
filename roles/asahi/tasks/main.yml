@@ -1,3 +1,5 @@
+# todo: install usertheme to setup panel size to hide macbook-pro notch here
+
 - name: Update kernel parameters
   command: grubby --args="{{ kernel_args }} apple_dcp.show_notch=1 slub_debug=-" --update-kernel=ALL
 

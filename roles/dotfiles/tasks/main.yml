@@ -9,7 +9,7 @@
 - name: Chromium flags
   copy:
     src: files/chromium-flags.conf
-    dest: $HOME/.config/environment.d/chromium.conf
+    dest: $HOME/.config/environment.d/chromium-flags.conf
     mode: "0600"
 
 - name: Clone dotfiles repository

@@ -1,7 +1,7 @@
 [org/gnome/Ptyxis]
 audible-bell=false
-default-profile-uuid='2b004b8b7275fb3f4c5ea9bf66e35fcf'
-profile-uuids=['2b004b8b7275fb3f4c5ea9bf66e35fcf']
+default-profile-uuid='48cbc7587819520d22b91c1166e41772'
+profile-uuids=['48cbc7587819520d22b91c1166e41772']
 visual-bell=false
 window-size=(uint32 171, uint32 95)
 
@@ -34,17 +34,8 @@ focus-mode='sloppy'
 
 [org/gnome/shell]
 disable-extension-version-validation=true
-disabled-extensions=['background-logo@fedorahosted.org']
+disabled-extensions=['background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com']
 enabled-extensions=['user-theme@gnome-shell-extensions.gcampax.github.com', 'appindicatorsupport@rgcjonas.gmail.com', 'Move_Clock@rmy.pobox.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'extension-list@tu.berry', 'text-scaler@gnome-shell-extensions.mariospr.org', 'custom-command-toggle@storageb.github.com', 'gsconnect@andyholmes.github.io', 'caffeine@patapon.info']
-
-[org/gnome/shell/extensions/user-theme]
-name='custom'
-
-[org/gnome/system/location]
-enabled=true
-
-[org/gnome/tweaks]
-show-extensions-notice=false
 
 [org/gnome/shell/extensions/custom-command-toggle]
 entryrow1-setting='~/myscripts/toggle-tap-to-click.sh true'
@@ -60,3 +51,16 @@ initialtogglestate2-setting=0
 numbuttons-setting=2
 togglestate1-setting=true
 togglestate2-setting=true
+
+[org/gnome/shell/extensions/user-theme]
+name='custom'
+
+[org/gnome/system/location]
+enabled=true
+
+[org/gnome/tweaks]
+show-extensions-notice=false
+
+[org/gtk/gtk4/settings/file-chooser]
+show-hidden=true
+sort-directories-first=true

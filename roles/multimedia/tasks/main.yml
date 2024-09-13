@@ -1,31 +1,30 @@
 # Step 1: Install DNF Groups
 
-- name: Install multimedia DNF group
+- name: Install core, multimedia, sound-and-video DNF groups
   dnf:
-    name: "@multimedia"
-    state: present
-
-- name: Install sound-and-video DNF group
-  dnf:
-    name: "@sound-and-video"
-    state: present
-
-- name: Install core DNF group
-  dnf:
-    name: "@core"
+    name:
+      - "@core"
+      - "@multimedia"
+      - "@sound-and-video"
     state: present
 
 # Step 2: Install RPM Fusion Repositories
 
-- name: Ensure RPM Fusion Free repository is installed
+- name: Ensure RPM Fusion Free and Non Free repositories are installed
   dnf:
-    name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
+    name:
+      - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
+      - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
+    disable_gpg_check: true
     state: present
 
-- name: Ensure RPM Fusion Non-Free repository is installed
-  dnf:
-    name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
-    state: present
+- name: Upgrade core group
+  command:
+    cmd: dnf group upgrade -y core
+
+- name: Upgrade all
+  command:
+    cmd: dnf --refresh upgrade --allowerasing --best
 
 # Step 3: Swap ffmpeg-free with ffmpeg
 
@@ -43,6 +42,17 @@
   command:
     cmd: dnf group upgrade -y sound-and-video
 
-- name: Upgrade core group
+- name: Upgrade all
   command:
-    cmd: dnf group upgrade -y core
+    cmd: dnf --refresh upgrade --allowerasing --best
+
+# Step 5: Install browsers
+- name: Install chromium
+  dnf:
+    name:
+      - chromium-browser
+    state: present
+
+- name: Widevine setup to enable DRM
+  shell: echo -e "\n\n" | /usr/bin/widevine-installer
+  ignore-errors: true

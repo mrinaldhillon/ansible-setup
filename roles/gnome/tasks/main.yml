@@ -1,8 +1,10 @@
-- name: Install system shell extensions packages
+- name: Install required packages
   dnf:
-    name: "{{ shell_extensions }}"
+    name:
+      - gnome-tweaks
+      - gnome-extensions-app
+      - git
     state: present
-
 - name: Apply GNOME settings
   copy:
     src: files/gnome-settings.dconf
@@ -15,3 +17,11 @@
   ignore_errors: true
   become: true
   become_user: "{{ ansible_user }}"
+
+- name: update dconf systemwide
+  shell: dconf update
+
+- name: Install system shell extensions packages
+  dnf:
+    name: "{{ shell_extensions }}"
+    state: present

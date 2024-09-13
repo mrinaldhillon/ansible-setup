@@ -5,15 +5,15 @@
     - vars/vault.yml
     - vars/main.yml
   roles:
-    - { role: multimedia, tags: install }
-    - { role: packages, tags: install }
-    - { role: gnome, tags: install }
+    - { role: multimedia, tags: multimedia }
+    - { role: packages, tags: packages }
     - role: github
-      tags: config
+      tags: github
+      become_user: "{{ ansible_user }}"
+    - { role: gnome, tags: gnome }
+    - role: fonts
+      tags: fonts
       become_user: "{{ ansible_user }}"
     - role: dotfiles
-      tags: config
-      become_user: "{{ ansible_user }}"
-    - role: fonts
-      tags: config
+      tags: dotfiles
       become_user: "{{ ansible_user }}"

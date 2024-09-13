@@ -1,6 +1,0 @@
-- name: Perform offline upgrade
-  command: dnf offline-upgrade download --best --refresh --assumeyes --allowerasing
-
-- name: Perform offline upgrade reboot
-  command: dnf offline reboot -y
-  ignore_errors: true
