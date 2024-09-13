@@ -12,4 +12,5 @@
       become_user: "{{ ansible_user }}"
     - role: fonts
       become_user: "{{ ansible_user }}"
+    - gnome
     - upgrade

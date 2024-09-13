@@ -1,10 +1,3 @@
-# roles/gnome/tasks/main.yml
-#- name: Install GNOME Shell Extensions
-#  command: gnome-extensions install {{ item.uuid }}
-#  loop: "{{ gnome_extensions }}"
-#  register: extension_install
-#  ignore_errors: true
-
 - name: Install system shell extensions packages
   dnf:
     name: "{{ shell_extensions }}"
@@ -14,11 +7,11 @@
   copy:
     src: files/gnome-settings.dconf
     dest: /tmp/gnome-settings.dconf
+  become: true
+  become_user: "{{ ansible_user }}"
 
 - name: Load GNOME settings using dconf
-  shell: dbus-launch dconf load / < /tmp/gnome-settings.dconf
+  shell: dconf load -f / < /tmp/gnome-settings.dconf
   ignore_errors: true
-#- name: Enable GNOME Shell Extensions
-#  shell: dbus-launch gnome-extensions enable {{ item.uuid }}
-#  loop: "{{ gnome_extensions }}"
-#  ignore_errors: true
+  become: true
+  become_user: "{{ ansible_user }}"
