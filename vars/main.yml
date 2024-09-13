@@ -2,7 +2,7 @@
 ansible_user: mrinal
 dotfiles_repo: "https://github.com/mrinaldhillon/dotfiles.git" # Replace with your actual dotfiles repo URL
 dotfiles_dir: "$HOME/dotfiles"
-kernel_args: "apple_dcp.show_notch=1 slub_debug=-"
+kernel_args: ""
 gnome_extensions:
   - uuid: "extension-list@tu.berry"
   - uuid: "appindicatorsupport@rgcjonas.gmail.com"
