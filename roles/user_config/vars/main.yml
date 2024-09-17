@@ -1,0 +1,3 @@
+---
+dotfiles_repo: "https://github.com/mrinaldhillon/dotfiles.git" # Replace with your actual dotfiles repo URL
+dotfiles_dir: "$HOME/dotfiles"

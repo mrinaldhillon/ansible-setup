@@ -1,27 +1,47 @@
-- name: Install required packages
-  dnf:
-    name:
-      - gnome-tweaks
-      - gnome-extensions-app
-      - git
-    state: present
-- name: Apply GNOME settings
-  copy:
-    src: files/gnome-settings.dconf
-    dest: /tmp/gnome-settings.dconf
+---
+# GNOME Package Installation
+- block:
+    - name: Install required GNOME packages
+      dnf:
+        name: "{{ gnome_packages }}"
+        state: present
+      become: true
+
+    # GNOME Settings Deployment
+    - name: Copy GNOME settings file
+      copy:
+        src: gsettings.dconf
+        dest: "/tmp/gsettings.dconf"
+
+    - name: Load GNOME settings using dconf
+      shell: dconf load -f / < /tmp/gsettings.dconf
+
+    - name: Update dconf system-wide
+      command: dconf update
+      become: true
+
+    # GNOME Shell Extensions
+    - name: Install GNOME shell extensions packages
+      dnf:
+        name: "{{ shell_extensions }}"
+        state: present
+      become: true
+  name: GNOME
+
+- block:
+    # Flatpak Setup
+    - name: Setup Flatpak remote
+      flatpak_remote:
+        name: flathub
+        flatpakrepo_url: "{{ flatpak_remote_url }}"
+        state: present
+
+    # Flatpak Applications Installation
+    - name: Install Flatpak applications
+      flatpak:
+        name: "{{ item }}"
+        state: present
+        remote: flathub
+      loop: "{{ flatpaks }}"
   become: true
-  become_user: "{{ ansible_user }}"
-
-- name: Load GNOME settings using dconf
-  shell: dconf load -f / < /tmp/gnome-settings.dconf
-  ignore_errors: true
-  become: true
-  become_user: "{{ ansible_user }}"
-
-- name: update dconf systemwide
-  shell: dconf update
-
-- name: Install system shell extensions packages
-  dnf:
-    name: "{{ shell_extensions }}"
-    state: present
+  name: FLATPAKS

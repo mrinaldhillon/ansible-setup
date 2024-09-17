@@ -1,0 +1,130 @@
+---
+- block:
+    # Asahi Linux Specific Configuration
+    - name: Update kernel parameters if not already set
+      command: grubby --args="{{ kernel_args }}" --update-kernel=ALL
+      when: kernel_args not in lookup('pipe', 'sudo grubby --info=ALL')
+
+    - name: Setup binfmt_misc for x86
+      shell: sed 's/:F$/:FC/' /usr/lib/binfmt.d/qemu-x86_64-static.conf > /etc/binfmt.d/qemu-x86_64-static.conf
+      ignore_errors: true
+
+    - name: Restart binfmt service
+      systemd:
+        name: systemd-binfmt.service
+        state: restarted
+
+    - name: Setup Widevine
+      shell: echo -e "\n\n" | /usr/bin/widevine-installer
+
+    # System upgrade
+    - name: Perform a system upgrade
+      shell: dnf distro-sync --offline --allowerasing -y && dnf offline reboot -y
+      ignore_errors: true
+  become: true
+  tags: asahi
+  name: ASAHI
+
+- block:
+    # Step 1: Install DNF Groups
+    - name: Install core, multimedia, sound-and-video DNF groups
+      dnf:
+        name:
+          - "@core"
+          - "@multimedia"
+          - "@sound-and-video"
+        state: present
+
+    # Step 2: Install RPM Fusion Repositories
+    - name: Ensure RPM Fusion Free and Non Free repositories are installed
+      dnf:
+        name:
+          - "{{ rpmfusion_free_url }}"
+          - "{{ rpmfusion_nonfree_url }}"
+        disable_gpg_check: true
+        state: present
+
+    - name: Upgrade core group
+      dnf:
+        name: "@core"
+        state: latest
+
+    - name: Upgrade all packages
+      dnf:
+        name: "*"
+        state: latest
+        update_only: yes
+
+    # Step 3: Swap ffmpeg-free with ffmpeg
+    - name: Swap ffmpeg-free with ffmpeg
+      dnf:
+        name: ffmpeg
+        state: present
+        allow_downgrade: true
+
+    # Step 4: Upgrade DNF Groups
+    - name: Upgrade multimedia group without weak dependencies
+      dnf:
+        name: "@multimedia"
+        state: latest
+        disable_excludes: PackageKit-gstreamer-plugin
+
+    - name: Upgrade sound-and-video group
+      dnf:
+        name: "@sound-and-video"
+        state: latest
+  become: true
+  name: Multimedia RPMFusion
+
+- block:
+    - name: Replace VIM with NEOVIM
+      dnf:
+        name:
+          - neovim
+          - python3-neovim
+          - neovim
+          - python3-pip
+          - python3-neovim
+          - fd-find
+          - fswatch
+          - ripgrep
+        state: present
+
+    # Create a custom nvim-clean wrapper
+    - name: Create nvim-clean wrapper script
+      copy:
+        dest: /usr/local/bin/nvim-clean
+        content: |
+          #!/bin/sh
+          exec nvim --clean "$@"
+        mode: "0755"
+
+    - name: Set nvim-clean as alternative for vim
+      alternatives:
+        name: vim
+        link: /usr/bin/vim
+        path: /usr/local/bin/nvim-clean
+        priority: 50
+  become: true
+  name: NEOVIM
+
+- block:
+    # 1Password Installation
+    - name: Ensure 1Password directory exists
+      file:
+        path: "{{ onepassword_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Extract 1Password
+      unarchive:
+        src: "{{ onepassword_url }}"
+        dest: "{{ onepassword_dir }}"
+        extra_opts: ["--strip-components=1", "--show-stored-names"]
+        remote_src: yes
+
+    - name: Run 1Password post-install script
+      command: /opt/1Password/after-install.sh
+  become: true
+  tags: 1password
+  name: 1PASSWORD
