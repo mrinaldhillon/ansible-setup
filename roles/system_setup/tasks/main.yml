@@ -77,17 +77,18 @@
   name: Multimedia RPMFusion
 
 - block:
+    - name: Install required packages
+      dnf:
+        name: "{{ packages }}"
+        state: present
+      become: true
+  name: Packages
+
+- block:
     - name: Replace VIM with NEOVIM
       dnf:
         name:
           - neovim
-          - python3-neovim
-          - neovim
-          - python3-pip
-          - python3-neovim
-          - fd-find
-          - fswatch
-          - ripgrep
         state: present
 
     # Create a custom nvim-clean wrapper

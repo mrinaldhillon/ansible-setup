@@ -5,6 +5,9 @@ rpmfusion_nonfree_url: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-n
 onepassword_url: "https://downloads.1password.com/linux/tar/beta/aarch64/1password-latest.tar.gz"
 onepassword_dir: "/opt/1Password"
 kernel_args: "apple_dcp.show_notch=1 slub_debug=-"
+coprs:
+  - che/nerd-fonts
+  - atim/starship
 packages:
   - unzip
   - tmux
@@ -18,3 +21,10 @@ packages:
   - qemu-user-static-x86
   - htop
   - flatpak
+  - python3-neovim
+  - neovim
+  - python3-pip
+  - python3-neovim
+  - fd-find
+  - fswatch
+  - ripgrep

@@ -35,6 +35,7 @@
         name: flathub
         flatpakrepo_url: "{{ flatpak_remote_url }}"
         state: present
+        method: user
 
     # Flatpak Applications Installation
     - name: Install Flatpak applications
@@ -42,6 +43,6 @@
         name: "{{ item }}"
         state: present
         remote: flathub
+        method: user
       loop: "{{ flatpaks }}"
-  become: true
   name: FLATPAKS

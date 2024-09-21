@@ -29,11 +29,14 @@ gnome_extensions:
   - uuid: "user-theme@gnome-shell-extensions.gcampax.github.com"
   - uuid: "paperwm@paperwm.github.com"
   - uuid: "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
-#- org.wezfurlong.wezterm
 #
 
 flatpak_remote_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
 flatpaks:
-  - org.gnome.gitlab.somas.Apostrophe
+  - com.calibre_ebook.calibre
+  - com.github.tchx84.Flatseal
   - com.mattjakeman.ExtensionManager
+  - io.github.flattool.Warehouse
+  - it.mijorus.gearlever
   - md.obsidian.Obsidian
+#- org.wezfurlong.wezterm
