@@ -46,3 +46,43 @@
         method: user
       loop: "{{ flatpaks }}"
   name: FLATPAKS
+
+- block:
+    - name: Ensure AppImages directory exists
+      file:
+        path: "{{ appimage_dest_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Download multiple AppImages
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ appimage_dest_dir }}/{{ item.name }}.AppImage"
+        mode: "0755"
+      loop: "{{ appimages }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Make all AppImages executable
+      file:
+        path: "{{ appimage_dest_dir }}/{{ item.name }}.AppImage"
+        mode: "0755"
+        state: file
+      loop: "{{ appimages }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Verify AppImages
+      command: "{{ appimage_dest_dir }}/{{ item.name }}.AppImage --appimage-version"
+      loop: "{{ appimages }}"
+      register: result
+      ignore_errors: true
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Print AppImage versions
+      debug:
+        msg: "{{ item.item.name }} version: {{ item.stdout }}"
+      loop: "{{ result.results }}"
+      when: item.rc == 0
+  name: AppImages

@@ -17,10 +17,10 @@
     - name: Setup Widevine
       shell: echo -e "\n\n" | /usr/bin/widevine-installer
 
-    # System upgrade
-    - name: Perform a system upgrade
-      shell: dnf distro-sync --offline --allowerasing -y && dnf offline reboot -y
+    - name: Install graphics driver
+      shell: dnf install mesa-asahi*
       ignore_errors: true
+
   become: true
   tags: asahi
   name: ASAHI

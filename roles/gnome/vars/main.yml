@@ -38,5 +38,10 @@ flatpaks:
   - com.mattjakeman.ExtensionManager
   - io.github.flattool.Warehouse
   - it.mijorus.gearlever
-  - md.obsidian.Obsidian
+  #- md.obsidian.Obsidian
 #- org.wezfurlong.wezterm
+
+appimage_dest_dir: "{{ ansible_env.HOME }}/AppImages"
+appimages:
+  - name: "Obsidian"
+    url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7-arm64.AppImage"
