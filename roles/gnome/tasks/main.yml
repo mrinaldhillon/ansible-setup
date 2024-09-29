@@ -8,6 +8,10 @@
       become: true
 
     # GNOME Settings Deployment
+    - name: Backup GNOME settings
+      shell: dconf dump / > {{ ansible_env.HOME }}/ogsettings.dconf
+
+    # GNOME Settings Deployment
     - name: Copy GNOME settings file
       copy:
         src: gsettings.dconf
