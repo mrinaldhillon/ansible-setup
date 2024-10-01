@@ -1,13 +1,13 @@
 # vars/main.yml
 ---
-rpmfusion_free_url: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
-rpmfusion_nonfree_url: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
 onepassword_url: "https://downloads.1password.com/linux/tar/beta/aarch64/1password-latest.tar.gz"
 onepassword_dir: "/opt/1Password"
 kernel_args: "apple_dcp.show_notch=1 slub_debug=-"
 coprs:
-  - che/nerd-fonts
-  - atim/starship
+  - name: nerd-fonts
+    repo: che/nerd-fonts
+  - name: starship
+    repo: atim/starship
 packages:
   - unzip
   - tmux
@@ -28,3 +28,4 @@ packages:
   - fd-find
   - fswatch
   - ripgrep
+  - dnf5-plugins

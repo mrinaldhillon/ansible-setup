@@ -1,4 +1,56 @@
 ---
+- block:
+    # Step 1: Install DNF Groups
+    - name: Install core, multimedia, sound-and-video DNF groups
+      dnf:
+        name:
+          - "@core"
+          - "@multimedia"
+          - "@sound-and-video"
+        state: present
+
+    # Step 2: Install RPM Fusion Repositories
+    - name: Ensure RPM Fusion Free and Non Free repositories are installed
+      dnf:
+        name:
+          - "{{ rpmfusion_free_url }}"
+          - "{{ rpmfusion_nonfree_url }}"
+        disable_gpg_check: true
+        state: present
+
+    - name: Upgrade core group
+      dnf:
+        name: "@core"
+        state: latest
+
+    - name: Upgrade all packages
+      dnf:
+        name: "*"
+        state: latest
+        update_only: yes
+
+    # Step 3: Swap ffmpeg-free with ffmpeg
+    - name: Swap ffmpeg-free with ffmpeg
+      dnf:
+        name: ffmpeg
+        state: present
+        allow_downgrade: true
+
+    # Step 4: Upgrade DNF Groups
+    - name: Upgrade multimedia group without weak dependencies
+      dnf:
+        name: "@multimedia"
+        state: latest
+        disable_excludes: PackageKit-gstreamer-plugin
+
+    - name: Upgrade sound-and-video group
+      dnf:
+        name: "@sound-and-video"
+        state: latest
+  become: true
+  tags: multimedia
+  name: Multimedia
+
 # GNOME Package Installation
 - block:
     - name: Install required GNOME packages
@@ -39,6 +91,7 @@
         name: flathub
         flatpakrepo_url: "{{ flatpak_remote_url }}"
         state: present
+        method: system
 
     # Flatpak Applications Installation
     - name: Install Flatpak applications
@@ -46,8 +99,9 @@
         name: "{{ item }}"
         state: present
         remote: flathub
+        method: system
       loop: "{{ flatpaks }}"
-  become: true
+  tags: flatpak
   name: FLATPAKS
 
 - block:

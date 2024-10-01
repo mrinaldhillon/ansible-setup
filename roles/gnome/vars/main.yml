@@ -1,4 +1,7 @@
 ---
+rpmfusion_free_url: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
+rpmfusion_nonfree_url: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
+
 gnome_packages:
   - gnome-tweaks
   - dconf-editor
@@ -7,15 +10,18 @@ gnome_packages:
   - wl-clipboard
   - ptyxis
   - rsms-inter-vf-fonts
+  - xlsclients
 
 shell_extensions:
   - gnome-shell-extension-appindicator
   - gnome-shell-extension-caffeine
   - gnome-shell-extension-common
   - gnome-shell-extension-frippery-move-clock
-  - gnome-shell-extension-gsconnect.aarch64
+  - gnome-shell-extension-gsconnect
   - gnome-shell-extension-launch-new-instance
   - gnome-shell-extension-user-theme
+  - gnome-shell-extensions-light-style
+  # forge, gpaste, native-window-placement
 
   # Add other GNOME packages as needed
 gnome_extensions:
@@ -29,7 +35,6 @@ gnome_extensions:
   - uuid: "user-theme@gnome-shell-extensions.gcampax.github.com"
   - uuid: "paperwm@paperwm.github.com"
   - uuid: "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
-#
 
 flatpak_remote_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
 flatpaks:
@@ -38,10 +43,10 @@ flatpaks:
   - com.mattjakeman.ExtensionManager
   - io.github.flattool.Warehouse
   - it.mijorus.gearlever
-  #- md.obsidian.Obsidian
+  - md.obsidian.Obsidian
 #- org.wezfurlong.wezterm
 
 appimage_dest_dir: "{{ ansible_env.HOME }}/AppImages"
 appimages:
-  - name: "Obsidian"
-    url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7-arm64.AppImage"
+  #- name: "Obsidian"
+  #  url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7-arm64.AppImage"

@@ -1,0 +1,30 @@
+---
+- block:
+    # Asahi Linux Specific Configuration
+    - name: Update kernel parameters if not already set
+      command: grubby --args="{{ kernel_args }}" --update-kernel=ALL
+      when: kernel_args not in lookup('pipe', 'sudo grubby --info=ALL')
+
+    - name: Setup Widevine
+      shell: echo -e "\n\n" | /usr/bin/widevine-installer
+
+    - name: Setup binfmt_misc for x86
+      shell: sed 's/:F$/:FC/' /usr/lib/binfmt.d/qemu-x86_64-static.conf > /etc/binfmt.d/qemu-x86_64-static.conf
+
+    - name: Restart binfmt service
+      systemd:
+        name: systemd-binfmt.service
+        state: restarted
+
+    - name: distrosync
+      shell: sudo dnf distro-sync --allowerasing --best --offline -y && sudo dnf offline reboot -y
+      ignore_errors: true
+
+    # TODO: probably installed by default
+    #- name: Install graphics driver
+    #  cmd: dnf install mesa-asahi* -y
+    #  ignore_errors: true
+
+  become: true
+  tags: asahi
+  name: ASAHI

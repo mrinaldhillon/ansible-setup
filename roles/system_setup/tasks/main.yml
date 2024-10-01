@@ -1,88 +1,26 @@
 ---
 - block:
-    # Asahi Linux Specific Configuration
-    - name: Update kernel parameters if not already set
-      command: grubby --args="{{ kernel_args }}" --update-kernel=ALL
-      when: kernel_args not in lookup('pipe', 'sudo grubby --info=ALL')
-
-    - name: Setup binfmt_misc for x86
-      shell: sed 's/:F$/:FC/' /usr/lib/binfmt.d/qemu-x86_64-static.conf > /etc/binfmt.d/qemu-x86_64-static.conf
-      ignore_errors: true
-
-    - name: Restart binfmt service
-      systemd:
-        name: systemd-binfmt.service
-        state: restarted
-
-    - name: Setup Widevine
-      shell: echo -e "\n\n" | /usr/bin/widevine-installer
-
-    - name: Install graphics driver
-      shell: dnf install mesa-asahi*
-      ignore_errors: true
-
-  become: true
-  tags: asahi
-  name: ASAHI
-
-- block:
-    # Step 1: Install DNF Groups
-    - name: Install core, multimedia, sound-and-video DNF groups
-      dnf:
-        name:
-          - "@core"
-          - "@multimedia"
-          - "@sound-and-video"
-        state: present
-
-    # Step 2: Install RPM Fusion Repositories
-    - name: Ensure RPM Fusion Free and Non Free repositories are installed
-      dnf:
-        name:
-          - "{{ rpmfusion_free_url }}"
-          - "{{ rpmfusion_nonfree_url }}"
-        disable_gpg_check: true
-        state: present
-
-    - name: Upgrade core group
-      dnf:
-        name: "@core"
-        state: latest
-
-    - name: Upgrade all packages
-      dnf:
-        name: "*"
-        state: latest
-        update_only: yes
-
-    # Step 3: Swap ffmpeg-free with ffmpeg
-    - name: Swap ffmpeg-free with ffmpeg
-      dnf:
-        name: ffmpeg
-        state: present
-        allow_downgrade: true
-
-    # Step 4: Upgrade DNF Groups
-    - name: Upgrade multimedia group without weak dependencies
-      dnf:
-        name: "@multimedia"
-        state: latest
-        disable_excludes: PackageKit-gstreamer-plugin
-
-    - name: Upgrade sound-and-video group
-      dnf:
-        name: "@sound-and-video"
-        state: latest
-  become: true
-  name: Multimedia RPMFusion
-
-- block:
     - name: Install required packages
       dnf:
         name: "{{ packages }}"
         state: present
-      become: true
+  become: true
   name: Packages
+
+- block:
+    - name: Enable COPR repositories dynamically
+      ansible.builtin.command:
+        cmd: dnf copr enable -y {{ item.repo }} fedora-{{ ansible_distribution_version }}-{{ ansible_architecture }}
+      loop: "{{ coprs }}"
+
+    - name: Install packages from COPR dynamically
+      ansible.builtin.dnf:
+        name: "{{ item.name }}"
+        state: present
+      loop: "{{ coprs }}"
+  become: true
+  tags: copr
+  name: Copr
 
 - block:
     - name: Replace VIM with NEOVIM

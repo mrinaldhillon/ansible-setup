@@ -1,6 +1,10 @@
 - name: Set up Fedora environment
   hosts: localhost
   roles:
+    - role: asahi
+      tags: asahi
+      run_once: true
+
     - role: system_setup
       tags: system_setup
 
