@@ -11,6 +11,7 @@ gnome_packages:
   - ptyxis
   - rsms-inter-vf-fonts
   - xlsclients
+  - cheese
 
 shell_extensions:
   - gnome-shell-extension-appindicator
@@ -21,7 +22,7 @@ shell_extensions:
   - gnome-shell-extension-launch-new-instance
   - gnome-shell-extension-user-theme
   - gnome-shell-extensions-light-style
-  # forge, gpaste, native-window-placement
+  # forge, gpaste, native-window-placement, night-theme-switcher
 
   # Add other GNOME packages as needed
 gnome_extensions:
