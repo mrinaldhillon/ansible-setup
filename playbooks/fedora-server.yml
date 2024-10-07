@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  become: true
+  roles:
+    - role: system
+      tags: system
+    - role: user
+      tags: user
+  vars_files:
+    - "../group_vars/all.yml"
