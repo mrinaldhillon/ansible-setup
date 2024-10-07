@@ -1,8 +1,4 @@
-# vars/main.yml
 ---
-onepassword_url: "https://downloads.1password.com/linux/tar/beta/aarch64/1password-latest.tar.gz"
-onepassword_dir: "/opt/1Password"
-kernel_args: "apple_dcp.show_notch=1 slub_debug=-"
 coprs:
   - name: nerd-fonts
     repo: che/nerd-fonts
@@ -14,6 +10,7 @@ packages:
   - tmux-powerline
   - tmux-top
   - podman
+  - buildah
   - toolbox
   - gh
   - stow
@@ -29,3 +26,10 @@ packages:
   - fswatch
   - ripgrep
   - dnf5-plugins
+  - dnf-plugins-core
+
+flatpak_remote_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+flatpak_method: system
+flatpaks:
+#appimage_dest_dir: "/opt/appimages"
+#appimages:

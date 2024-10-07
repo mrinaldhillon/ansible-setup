@@ -6,15 +6,16 @@
       when: kernel_args not in lookup('pipe', 'sudo grubby --info=ALL')
 
     - name: Setup Widevine
-      shell: echo -e "\n\n" | /usr/bin/widevine-installer
+      shell: echo -e "\n\n" | sudo /usr/bin/widevine-installer
+
+    - name: Ensure binfmt_misc.d exists
+      file:
+        path: "/etc/binfmt.d/"
+        state: directory
+        mode: "0755"
 
     - name: Setup binfmt_misc for x86
-      shell: sed 's/:F$/:FC/' /usr/lib/binfmt.d/qemu-x86_64-static.conf > /etc/binfmt.d/qemu-x86_64-static.conf
-
-    - name: Restart binfmt service
-      systemd:
-        name: systemd-binfmt.service
-        state: restarted
+      shell: sudo sed 's/:F$/:FC/' /usr/lib/binfmt.d/qemu-x86_64-static.conf > /etc/binfmt.d/qemu-x86_64-static.conf
 
     - name: distrosync
       shell: sudo dnf distro-sync --allowerasing --best --offline -y && sudo dnf offline reboot -y

@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - role: system
+      tags: system
+    - role: user
+      tags: user
+    - role: flatpak
+      tags: flatpak
+    - role: appimage
+      tags: appimage
+  vars_files:
+    - "../group_vars/all.yml"

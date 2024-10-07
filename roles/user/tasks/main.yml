@@ -1,0 +1,49 @@
+---
+- name: Include encrypted variables from vault
+  include_vars:
+    file: "{{ role_path }}/vars/vault.yml"
+  no_log: true
+
+- block:
+    - name: Create Path for env files
+      file:
+        path: "{{ ansible_env.HOME }}/.config/environment.d"
+        state: directory
+        mode: "0755"
+
+    - copy:
+        src: keys.conf
+        dest: "{{ ansible_env.HOME }}/.config/environment.d/keys.conf"
+        mode: "0600"
+
+    - copy:
+        src: electron.conf
+        dest: "{{ ansible_env.HOME }}/.config/environment.d/electron.conf"
+        mode: "0600"
+
+    - name: Ensure ~/.gitconfig is deployed
+      copy:
+        src: gitconfig
+        dest: "{{ ansible_env.HOME }}/.gitconfig"
+        mode: "0600"
+
+    # GitHub Authentication
+    - name: GITHUB
+      shell: |
+        echo "{{ vault_github_token }}" | gh auth login --with-token
+      no_log: true
+
+    # Dotfiles Management
+    - name: Clone dotfiles repository
+      environment:
+        GH_TOKEN: "{{ vault_github_token }}"
+      command: gh repo clone dotfiles {{ dotfiles_dir }}
+      args:
+        creates: "{{ dotfiles_dir }}"
+
+    - name: Apply dotfiles using stow
+      shell: stow .
+      args:
+        chdir: "{{ dotfiles_dir }}"
+      ignore_errors: true
+  name: DOTFILES

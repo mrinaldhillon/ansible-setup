@@ -1,0 +1,25 @@
+---
+# Flatpak Setup
+- name: Setup Flatpak remote
+  flatpak_remote:
+    name: flathub
+    flatpakrepo_url: "{{ flatpak_remote_url }}"
+    state: present
+    method: system
+
+# Flatpak Applications Installation
+- name: Install Flatpak applications
+  block:
+    - name: Install {{ item }} from flathub
+      flatpak:
+        name: "{{ item }}"
+        state: present
+        remote: flathub
+        method: system
+      loop: "{{ flatpaks }}"
+      loop_control:
+        label: "{{ item }}"
+  rescue:
+    - name: Log the failure of Flatpak installation
+      debug:
+        msg: "Failed to install {{ item }} from flathub"

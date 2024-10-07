@@ -1,6 +1,7 @@
+# gnome specific
 ---
-rpmfusion_free_url: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
-rpmfusion_nonfree_url: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
+onepassword_url: "https://downloads.1password.com/linux/tar/beta/aarch64/1password-latest.tar.gz"
+onepassword_dir: "/opt/1Password"
 
 gnome_packages:
   - gnome-tweaks
@@ -12,8 +13,6 @@ gnome_packages:
   - rsms-inter-vf-fonts
   - xlsclients
   - cheese
-
-shell_extensions:
   - gnome-shell-extension-appindicator
   - gnome-shell-extension-caffeine
   - gnome-shell-extension-common
@@ -24,7 +23,20 @@ shell_extensions:
   - gnome-shell-extensions-light-style
   # forge, gpaste, native-window-placement, night-theme-switcher
 
+flatpaks:
+  - com.calibre_ebook.calibre
+  - com.github.tchx84.Flatseal
+  - com.mattjakeman.ExtensionManager
+  - io.github.flattool.Warehouse
+  - it.mijorus.gearlever
+  - md.obsidian.obsidian
+  - org.wezfurlong.wezterm
+
+appimage_dest_dir: "{{ ansible_env.HOME }}/AppImages"
+appimages:
+
   # Add other GNOME packages as needed
+  # TODO: fetch from src
 gnome_extensions:
   - uuid: "extension-list@tu.berry"
   - uuid: "appindicatorsupport@rgcjonas.gmail.com"
@@ -36,18 +48,3 @@ gnome_extensions:
   - uuid: "user-theme@gnome-shell-extensions.gcampax.github.com"
   - uuid: "paperwm@paperwm.github.com"
   - uuid: "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
-
-flatpak_remote_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
-flatpaks:
-  - com.calibre_ebook.calibre
-  - com.github.tchx84.Flatseal
-  - com.mattjakeman.ExtensionManager
-  - io.github.flattool.Warehouse
-  - it.mijorus.gearlever
-  - md.obsidian.Obsidian
-#- org.wezfurlong.wezterm
-
-appimage_dest_dir: "{{ ansible_env.HOME }}/AppImages"
-appimages:
-  #- name: "Obsidian"
-  #  url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7-arm64.AppImage"

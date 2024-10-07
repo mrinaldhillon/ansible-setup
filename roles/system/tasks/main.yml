@@ -46,24 +46,3 @@
         priority: 50
   become: true
   name: NEOVIM
-
-- block:
-    # 1Password Installation
-    - name: Ensure 1Password directory exists
-      file:
-        path: "{{ onepassword_dir }}"
-        state: directory
-        mode: "0755"
-
-    - name: Extract 1Password
-      unarchive:
-        src: "{{ onepassword_url }}"
-        dest: "{{ onepassword_dir }}"
-        extra_opts: ["--strip-components=1", "--show-stored-names"]
-        remote_src: yes
-
-    - name: Run 1Password post-install script
-      command: /opt/1Password/after-install.sh
-  become: true
-  tags: 1password
-  name: 1PASSWORD

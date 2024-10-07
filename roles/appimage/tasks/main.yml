@@ -1,0 +1,18 @@
+---
+- name: Ensure AppImages directory exists
+  file:
+    path: "{{ appimage_dest_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Install AppImages
+  block:
+    - name: Fetch {{ item.name }} AppImage
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ appimage_dest_dir }}/{{ item.name }}.appimage"
+        mode: "0755"
+      ignore_errors: true
+  loop: "{{ appimages }}"
+  loop_control:
+    label: "{{ item.name }}"

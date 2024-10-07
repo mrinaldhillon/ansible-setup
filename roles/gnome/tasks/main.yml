@@ -1,62 +1,11 @@
 ---
-- block:
-    # Step 1: Install DNF Groups
-    - name: Install core, multimedia, sound-and-video DNF groups
-      dnf:
-        name:
-          - "@core"
-          - "@multimedia"
-          - "@sound-and-video"
-        state: present
-
-    # Step 2: Install RPM Fusion Repositories
-    - name: Ensure RPM Fusion Free and Non Free repositories are installed
-      dnf:
-        name:
-          - "{{ rpmfusion_free_url }}"
-          - "{{ rpmfusion_nonfree_url }}"
-        disable_gpg_check: true
-        state: present
-
-    - name: Upgrade core group
-      dnf:
-        name: "@core"
-        state: latest
-
-    - name: Upgrade all packages
-      dnf:
-        name: "*"
-        state: latest
-        update_only: yes
-
-    # Step 3: Swap ffmpeg-free with ffmpeg
-    - name: Swap ffmpeg-free with ffmpeg
-      dnf:
-        name: ffmpeg
-        state: present
-        allow_downgrade: true
-
-    # Step 4: Upgrade DNF Groups
-    - name: Upgrade multimedia group without weak dependencies
-      dnf:
-        name: "@multimedia"
-        state: latest
-        disable_excludes: PackageKit-gstreamer-plugin
-
-    - name: Upgrade sound-and-video group
-      dnf:
-        name: "@sound-and-video"
-        state: latest
-  become: true
-  tags: multimedia
-  name: Multimedia
-
 # GNOME Package Installation
 - block:
     - name: Install required GNOME packages
       dnf:
         name: "{{ gnome_packages }}"
         state: present
+        skip_unavailable: true
       become: true
 
     # GNOME Settings Deployment
@@ -75,71 +24,25 @@
     - name: Update dconf system-wide
       command: dconf update
       become: true
-
-    # GNOME Shell Extensions
-    - name: Install GNOME shell extensions packages
-      dnf:
-        name: "{{ shell_extensions }}"
-        state: present
-      become: true
   name: GNOME
 
 - block:
-    # Flatpak Setup
-    - name: Setup Flatpak remote
-      flatpak_remote:
-        name: flathub
-        flatpakrepo_url: "{{ flatpak_remote_url }}"
-        state: present
-        method: system
-
-    # Flatpak Applications Installation
-    - name: Install Flatpak applications
-      flatpak:
-        name: "{{ item }}"
-        state: present
-        remote: flathub
-        method: system
-      loop: "{{ flatpaks }}"
-  tags: flatpak
-  name: FLATPAKS
-
-- block:
-    - name: Ensure AppImages directory exists
+    # 1Password Installation
+    - name: Ensure 1Password directory exists
       file:
-        path: "{{ appimage_dest_dir }}"
+        path: "{{ onepassword_dir }}"
         state: directory
         mode: "0755"
 
-    - name: Download multiple AppImages
-      get_url:
-        url: "{{ item.url }}"
-        dest: "{{ appimage_dest_dir }}/{{ item.name }}.AppImage"
-        mode: "0755"
-      loop: "{{ appimages }}"
-      loop_control:
-        label: "{{ item.name }}"
+    - name: Extract 1Password
+      unarchive:
+        src: "{{ onepassword_url }}"
+        dest: "{{ onepassword_dir }}"
+        extra_opts: ["--strip-components=1", "--show-stored-names"]
+        remote_src: yes
 
-    - name: Make all AppImages executable
-      file:
-        path: "{{ appimage_dest_dir }}/{{ item.name }}.AppImage"
-        mode: "0755"
-        state: file
-      loop: "{{ appimages }}"
-      loop_control:
-        label: "{{ item.name }}"
-
-    - name: Verify AppImages
-      command: "{{ appimage_dest_dir }}/{{ item.name }}.AppImage --appimage-version"
-      loop: "{{ appimages }}"
-      register: result
-      ignore_errors: true
-      loop_control:
-        label: "{{ item.name }}"
-
-    - name: Print AppImage versions
-      debug:
-        msg: "{{ item.item.name }} version: {{ item.stdout }}"
-      loop: "{{ result.results }}"
-      when: item.rc == 0
-  name: AppImages
+    - name: Run 1Password post-install script
+      command: /opt/1Password/after-install.sh
+  become: true
+  tags: 1password
+  name: 1PASSWORD

@@ -1,0 +1,2 @@
+---
+kernel_args: "apple_dcp.show_notch=1 slub_debug=-"

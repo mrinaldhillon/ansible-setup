@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  become: true
+  roles:
+    - role: asahi
+      tags: asahi
+      run_once: true
+    - role: system
+      tags: system
+    - role: gnome
+      tags: gnome
+    - role: codecs
+      tags: codecs
+    - role: flatpak
+      tags: flatpak
+    - role: appimage
+      tags: appimage
+    - role: user
+      tags: user
+  vars_files:
+    - "../group_vars/all.yml"
+    - "../group_vars/desktop.yml"
+    - "../group_vars/asahi.yml"
