@@ -33,6 +33,13 @@
         echo "{{ vault_github_token }}" | gh auth login --with-token
       no_log: true
 
+    - name: NEOVIM
+      environment:
+        GH_TOKEN: "{{ vault_github_token }}"
+      command: gh repo clone nvim "{{ ansible_env.HOME }}/.config/nvim -- -b dev
+      args:
+        creates: "{{ ansible_env.HOME }}/.config/nvim"
+
     # Dotfiles Management
     - name: Clone dotfiles repository
       environment:
